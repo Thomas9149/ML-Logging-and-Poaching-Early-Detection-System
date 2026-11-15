@@ -1,0 +1,14 @@
+ai-edge-litert==2.3.0
+backports.strenum==1.2.8
+certifi==2026.10.23
+cffi==2.1.1
+flatbuffers==25.12.19
+ml_dtypes==0.6.0
+numpy==2.5.4
+protobuf==7.36.2
+pycparser==3.12
+scipy==1.18.1
+sounddevice==0.5.6
+soxr==1.1.0
+tqdm==4.70.1
+typing_extensions==4.16.0

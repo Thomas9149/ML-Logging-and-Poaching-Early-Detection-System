@@ -1,0 +1,5 @@
+.venv/
+logs/
+recordings/
+frames/
+__pycache__/

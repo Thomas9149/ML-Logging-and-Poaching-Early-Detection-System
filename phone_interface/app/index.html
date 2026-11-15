@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Forest Watch</title>
+  <meta name="description" content="Alerts from Forest Watch acoustic sensors: chainsawing, logging, gunshots and poaching.">
+  <meta name="theme-color" content="#0e1411">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Forest Watch">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 5 11h3l-4 6h6v5h4v-5h6l-4-6h3z"/></svg>
+      <span>Forest Watch</span>
+    </div>
+    <div id="status" class="status" data-state="connecting">
+      <span class="dot"></span><span class="txt">Connecting…</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ALERTS ---------------------------------------------------------->
+    <section id="tab-alerts" class="tab active" aria-label="Alerts">
+      <div class="pad">
+        <div id="hero"></div>
+        <div id="sound-hint" class="hint" hidden>
+          Tap anywhere to turn on alert sounds. On iPhone, the silent switch must be off.
+        </div>
+        <div class="section-head">
+          <h2>Event log</h2>
+          <span id="log-count" class="muted"></span>
+        </div>
+        <div id="filters" class="chips" role="tablist"></div>
+        <div id="log"></div>
+      </div>
+    </section>
+
+    <!-- FOREST ---------------------------------------------------------->
+    <section id="tab-forest" class="tab" aria-label="Forest map">
+      <div id="map"></div>
+      <div class="map-badge">
+        <strong>Mock locations</strong>
+        <span>Three microphones, made-up positions. Tap an alert to see how its location is triangulated.</span>
+      </div>
+      <div id="sheet" class="sheet" hidden></div>
+    </section>
+
+    <!-- SETTINGS -------------------------------------------------------->
+    <section id="tab-settings" class="tab" aria-label="Settings">
+      <div class="pad">
+        <h2>Subscriptions</h2>
+        <p class="muted small">Choose which alerts this phone receives.</p>
+        <div id="subs" class="card list"></div>
+
+        <h2>Connection</h2>
+        <div class="card form">
+          <label>Topic prefix
+            <input id="in-prefix" autocapitalize="off" autocorrect="off" spellcheck="false">
+          </label>
+          <label>ntfy server
+            <input id="in-server" type="url" autocapitalize="off" autocorrect="off" spellcheck="false">
+          </label>
+          <p class="muted small">Must match <code>--ntfy-prefix</code> on the Arduino. Topics:
+            <span id="topic-list"></span></p>
+        </div>
+
+        <h2>On this phone</h2>
+        <div class="card list">
+          <label class="row toggle"><span><b>Alert sound</b><small>Plays when an alert arrives</small></span>
+            <input id="in-sound" type="checkbox"><i></i></label>
+          <label class="row toggle"><span><b>Keep screen on</b><small>Alerts only arrive while the app is open</small></span>
+            <input id="in-awake" type="checkbox"><i></i></label>
+        </div>
+
+        <h2>Test</h2>
+        <p class="muted small">Creates pretend alerts on this phone only. To test the full path, run
+          <code>python incidents.py --demo --speed 10 --ntfy-prefix …</code> in <code>forest/</code>.</p>
+        <div id="sim" class="sim-grid"></div>
+        <button id="btn-story" class="btn wide">Play demo story</button>
+        <button id="btn-clear" class="btn wide danger">Clear event log</button>
+        <p class="muted small center">Forest Watch · phone app (prototype)</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tabbtn active" data-tab="alerts">
+      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0"/></svg>
+      <span>Alerts</span><em id="badge" hidden></em>
+    </button>
+    <button class="tabbtn" data-tab="forest">
+      <svg viewBox="0 0 24 24"><path d="M8 3 3 11h3l-3 5h5v5h2v-5h4l-3-5h3zM17 7l-3 5h2l-2 4h3v5h2v-5h3l-2-4h2z"/></svg>
+      <span>Forest</span>
+    </button>
+    <button class="tabbtn" data-tab="settings">
+      <svg viewBox="0 0 24 24"><path d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm8.5 3-2-.6-.6-1.5 1-1.9-1.4-1.4-1.9 1-1.5-.6-.6-2h-2l-.6 2-1.5.6-1.9-1-1.4 1.4 1 1.9-.6 1.5-2 .6v2l2 .6.6 1.5-1 1.9 1.4 1.4 1.9-1 1.5.6.6 2h2l.6-2 1.5-.6 1.9 1 1.4-1.4-1-1.9.6-1.5 2-.6z"/></svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+  <div id="banner-wrap"></div>
+  <div id="toast" class="toast" hidden></div>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
